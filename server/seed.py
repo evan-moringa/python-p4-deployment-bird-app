@@ -1,9 +1,16 @@
-from app import app
-from models import db, Bird
+# seed.py
 
-db.init_app(app)
+from app import app, db
+from models import Bird
 
+# Initialize the app and the database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///birds.sqlite'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+
+# Create all tables
 with app.app_context():
+    db.create_all()
 
     print('Deleting existing birds...')
     Bird.query.delete()
